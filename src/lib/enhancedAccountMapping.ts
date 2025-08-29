@@ -650,7 +650,8 @@ function deduplicateAndEnhanceExecutives(executives: any[]) {
       e.company.toLowerCase() === exec.company.toLowerCase()
     );
     
-    const allSources = [...new Set(duplicates.flatMap(d => d.sources))];
+    const sourceSet = new Set(duplicates.flatMap(d => d.sources));
+    const allSources = Array.from(sourceSet);
     const bestLinkedInUrl = duplicates.find(d => d.linkedin_url)?.linkedin_url;
     
     return {
@@ -707,7 +708,8 @@ function buildReportingHierarchy(executives: any[]) {
 }
 
 function extractDepartments(executives: any[]) {
-  const departments = [...new Set(executives.map(exec => exec.department).filter(Boolean))];
+  const departmentSet = new Set(executives.map(exec => exec.department).filter(Boolean));
+  const departments = Array.from(departmentSet);
   return departments.sort();
 }
 
@@ -812,7 +814,7 @@ export function convertExecutiveSearchToAccountMap(
       'Some individual contributors not included in executive search',
       'International office leadership may be limited'
     ],
-    citations: [...new Set(executiveResult.executives.flatMap(exec => exec.sources))]
+    citations: Array.from(new Set(executiveResult.executives.flatMap(exec => exec.sources)))
   };
 }
 

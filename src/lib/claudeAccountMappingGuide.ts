@@ -254,4 +254,4 @@ export const CLAUDE_IMPLEMENTATION_CHECKLIST = `
 🎯 SUCCESS: Comprehensive executive discovery matching custom GPT quality!
 `;
 
-export { CLAUDE_ACCOUNT_MAPPING_PROMPT, generateClaudeAccountMappingPrompt, CLAUDE_RESULT_VALIDATION, CLAUDE_IMPLEMENTATION_CHECKLIST };
+// Exports are already defined above

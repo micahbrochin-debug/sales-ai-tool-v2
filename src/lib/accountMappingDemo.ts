@@ -141,7 +141,4 @@ export function getAccountMappingUsageGuide(): string {
 `;
 }
 
-/**
- * Export the demo function for testing
- */
-export { createHaventreeBankTestCase, validateAccountMappingQuality } from './testAccountMapping';
+// Demo functions are defined above - testAccountMapping.ts functions are imported separately

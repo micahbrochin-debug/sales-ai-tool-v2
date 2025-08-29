@@ -617,5 +617,4 @@ TARGET: Match the thoroughness of discovering "CEO Fern Glowinsky, COO John Bour
 `;
 }
 
-// Export test functions for component testing
-export { createHaventreeBankTestCase, createTechCompanyTestCase, validateAccountMappingQuality };
+// Test functions are already exported above
