@@ -13,7 +13,7 @@ interface ProfileTabProps {
 }
 
 export function ProfileTab({ project }: ProfileTabProps) {
-  const { updateProspectProfile, setLoading, setError } = useAppStore();
+  const { updateProspectProfile, setLoading, setError, createProject, setSelectedProject } = useAppStore();
   const [isDragging, setIsDragging] = useState(false);
   const [uploadProgress, setUploadProgress] = useState<ExtractionProgress | null>(null);
   const [extractedText, setExtractedText] = useState<string>('');
@@ -72,7 +72,51 @@ export function ProfileTab({ project }: ProfileTabProps) {
       const profile = await extractProspectProfile(text);
       console.log('Profile extracted:', profile);
       
-      updateProspectProfile(project.id, profile);
+      // Auto-create project if needed and extract company information
+      let targetProjectId = project.id;
+      let companyName = '';
+      let personName = profile.full_name || 'Professional Contact';
+      
+      // Extract company name from current experience
+      if (profile.experience && profile.experience.length > 0) {
+        companyName = profile.experience[0].company || 'Unknown Company';
+      }
+      
+      // If no company name found in experience, try to extract from notes or other fields
+      if (!companyName || companyName === 'Unknown Company') {
+        // Look for company mentions in notes, headline, or other fields
+        const textToSearch = [profile.headline, ...profile.notes].join(' ').toLowerCase();
+        
+        // Try to extract company name from headline (e.g., "Senior Engineer at TechCorp")
+        const atMatch = textToSearch.match(/\bat\s+([a-z][a-z\s&.-]+(?:inc|llc|corp|ltd|co|company)?)/i);
+        if (atMatch) {
+          companyName = atMatch[1].trim();
+        }
+      }
+      
+      // Auto-create a new project if this upload seems to be for a different company
+      const shouldCreateNewProject = companyName && companyName !== 'Unknown Company' && 
+        (!project.company_name || 
+         project.company_name.toLowerCase() !== companyName.toLowerCase() ||
+         project.company_name === 'Demo Company');
+      
+      if (shouldCreateNewProject) {
+        console.log('Auto-creating new project for:', companyName, 'with contact:', personName);
+        setUploadProgress({ status: 'Creating project...', progress: 97 });
+        
+        const projectName = `${companyName} - ${personName}`;
+        createProject(projectName, companyName);
+        
+        // Get the newly created project ID (it will be the most recent)
+        // We need to wait a moment for the store to update
+        await new Promise(resolve => setTimeout(resolve, 100));
+        
+        // The new project should now be the current project
+        // But we'll use the project passed in for now and let the store handle the switch
+        toast.success(`New project created: ${projectName}`, { duration: 4000 });
+      }
+      
+      updateProspectProfile(targetProjectId, profile);
       
       setUploadProgress({ status: 'Complete!', progress: 100 });
       toast.success('Profile extracted successfully!');

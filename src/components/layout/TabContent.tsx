@@ -7,21 +7,15 @@ import { StackTab } from '../tabs/StackTab';
 import { AccountTab } from '../tabs/AccountTab';
 import { PlanTab } from '../tabs/PlanTab';
 import { ChatTab } from '../tabs/ChatTab';
+import { EmptyStateUpload } from '../ui/EmptyStateUpload';
 
 export function TabContent() {
   const { activeTab, currentProject } = useAppStore();
 
   if (!currentProject) {
     return (
-      <div className="flex-1 flex items-center justify-center bg-secondary-50">
-        <div className="text-center">
-          <h3 className="text-lg font-medium text-secondary-900 mb-2">
-            No Project Selected
-          </h3>
-          <p className="text-secondary-600">
-            Select a project from the sidebar or create a new one to get started.
-          </p>
-        </div>
+      <div className="flex-1 bg-gray-50">
+        <EmptyStateUpload />
       </div>
     );
   }

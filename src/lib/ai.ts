@@ -740,72 +740,81 @@ Return comprehensive Tech Stack Recon JSON with complete evidence documentation.
     companyName: string,
     companyDomain?: string
   ): Promise<AccountMap> {
-    const prompt = `Company: ${companyName} (${companyDomain || 'domain unknown'})
-Mandatory research steps:
-1. Check: LinkedIn Company page (Leadership/People), site:linkedin.com/in "${companyName}", Company site (About/Team/Leadership/Management), Crunchbase (Leadership), press/news/blog posts naming executives, job posts naming managers.
-2. If public: review IR, 10-K/10-Q/annual report for named executives.
-3. Cross-check ≥2 sources per person; include sources.
-4. If a level is missing, add a gaps entry: "No public data found: <function/region>".
-5. Structure org_tree as nodes with reports_to referencing the manager's name.
-Required coverage: C-suite, VPs, Directors (Managers if discoverable).
-Roles: Tag each in role_analysis (economic buyer, champion, evaluator, influencer, blocker, or "Lead to validate").
-Output: valid JSON per schema only.`;
+    const prompt = `COMPREHENSIVE ORGANIZATIONAL MAPPING & LEADERSHIP INTELLIGENCE
+Company: ${companyName}
+Domain: ${companyDomain || 'Unknown - identify through comprehensive search'}
+
+MANDATORY DEEP WEB RESEARCH SOURCES - Execute ALL:
+
+🔍 PRIMARY LEADERSHIP SOURCES:
+□ LinkedIn Company Page: Complete leadership section, "People" tab, executive profiles
+□ LinkedIn Advanced Search: "people who work at ${companyName}" + title filters (CEO, CTO, VP, Director)
+□ LinkedIn Sales Navigator: Organizational chart view, team structure, reporting relationships
+□ TheOrg.com: ${companyName} organizational chart, leadership changes, team hierarchies
+□ Company Website: /about, /leadership, /team, /management, /board, /executives pages
+□ Crunchbase: Executive team profiles, board members, advisor listings, leadership timeline
+□ SEC Filings: 10-K, 10-Q, DEF 14A proxy statements for executive compensation and structure
+□ ZoomInfo: Executive contact database, organizational hierarchy, recent changes
+
+🔍 SECONDARY INTELLIGENCE SOURCES:  
+□ AngelList: Startup team pages, founder profiles, key employee listings
+□ GitHub: Organization owners, repository contributors, technical leadership indicators
+□ Bloomberg/Reuters: Executive announcements, leadership appointments, organizational changes
+□ Industry Publications: Executive interviews, conference speaker bios, thought leadership
+□ Conference Speakers: RSA, BlackHat, DefCon, Strata, technical conference participation
+□ Social Media Deep Dive: Twitter/X executive accounts, LinkedIn activity, professional presence
+□ Patent Filings: Inventor names, technical leadership, R&D team structure
+□ Press Releases: New hire announcements, promotion announcements, organizational restructuring
+
+🔍 HIRING INTELLIGENCE FOR TEAM STRUCTURE:
+□ LinkedIn Jobs: Manager names in job postings, team structure indicators, reporting hierarchy
+□ Indeed/Glassdoor: "Reports to" information, team descriptions, organizational context
+□ Job Posting Analysis: Team sizes, budget indicators, organizational priorities
+□ Salary Data: Compensation ranges indicating seniority levels and budget authority
+
+ADVANCED LEADERSHIP MAPPING REQUIREMENTS:
+
+1. EXECUTIVE IDENTIFICATION (Minimum 15+ people):
+   - C-Suite: CEO, CTO, CISO, CFO, COO with complete LinkedIn profiles
+   - VP Level: Engineering, Security, Product, Sales, Marketing leadership  
+   - Director Level: Security Engineering, DevOps, Platform, Compliance directors
+   - Technical Leaders: Principal Engineers, Security Architects, Staff Engineers
+
+2. DECISION-MAKING AUTHORITY MAPPING:
+   - Budget Authority: Who approves $10K, $50K, $100K+ technology purchases
+   - Technical Decisions: Architecture, security tools, compliance requirements
+   - Procurement Influence: Vendor selection, contract negotiations, renewals
+   - Strategic Planning: Technology roadmap, security strategy, transformation
+
+3. MULTI-SOURCE VERIFICATION PROTOCOL:
+   - Every person verified across minimum 3 independent sources
+   - Confidence scoring: High (3+ sources), Medium (2 sources), Low (1 source)
+   - Recent validation: Information updated within last 6 months
+   - Cross-reference: LinkedIn + company website + news/press required
+
+4. CONTACT & COMMUNICATION INTELLIGENCE:
+   - Email patterns: firstname.lastname@company.com analysis
+   - LinkedIn messaging preferences and response patterns  
+   - Social media activity indicating availability and interests
+   - Communication hierarchy and escalation paths
+
+5. STAKEHOLDER CLASSIFICATION (Required for each person):
+   - Economic Buyer: Final budget authority, ROI accountability
+   - Champion: Internal advocate, solution enthusiast, change agent
+   - Evaluator: Technical assessment, POC lead, vendor comparison
+   - Influencer: Opinion leader, recommendation provider, technical advisor  
+   - Blocker: Change resistant, alternative advocate, constraint enforcer
+   - User: End user, operator, feedback provider, adoption success
+
+Output: Comprehensive Account Map JSON with 15+ verified organizational members, complete reporting hierarchy, budget authority mapping, and multi-source verification.`;
 
     if (this.useMockData) {
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      return {
-        company_snapshot: {
-          industry: "Software Development",
-          hq: "San Francisco, CA",
-          size: "500-1000 employees",
-          revenue: "$50M-$100M",
-          structure_summary: "Flat engineering organization with strong technical leadership"
-        },
-        org_tree: [
-          {
-            name: "Jane Doe",
-            title: "Chief Technology Officer",
-            reports_to: "CEO",
-            level: "C-Suite",
-            region_function: "Global/Technology",
-            sources: ["https://techcorp.com/about", "https://linkedin.com/in/janedoe"]
-          },
-          {
-            name: "Bob Wilson",
-            title: "VP of Engineering",
-            reports_to: "Jane Doe",
-            level: "VP",
-            region_function: "Global/Engineering",
-            sources: ["https://techcorp.com/team", "https://linkedin.com/in/bobwilson"]
-          }
-        ],
-        role_analysis: [
-          {
-            name: "Jane Doe",
-            title: "Chief Technology Officer",
-            role: "economic buyer",
-            notes: "Final decision maker for technology purchases over $50K",
-            sources: ["https://techcorp.com/about"]
-          },
-          {
-            name: "Bob Wilson",
-            title: "VP of Engineering",
-            role: "champion",
-            notes: "Strong advocate for developer productivity tools",
-            sources: ["https://linkedin.com/in/bobwilson"]
-          }
-        ],
-        gaps: [
-          "No public data found: Security team leadership",
-          "No public data found: DevOps team structure"
-        ],
-        citations: [
-          "https://techcorp.com/about",
-          "https://techcorp.com/team",
-          "https://linkedin.com/in/janedoe",
-          "https://linkedin.com/in/bobwilson"
-        ]
-      };
+      console.log('🔍 Simulating comprehensive organizational mapping with deep web research...');
+      await new Promise(resolve => setTimeout(resolve, 8000));
+      
+      // Generate enhanced account mapping with comprehensive organizational intelligence
+      const enhancedAccountMap = this.generateComprehensiveAccountMap(companyName, companyDomain);
+      return enhancedAccountMap;
     }
 
     const response = await this.callAI(ACCOUNT_MAP_PROMPT, prompt);
@@ -1172,6 +1181,253 @@ Output: Sales Plan JSON only.`;
         `https://${domain}/security`,
         "https://builtwith.com/" + domain,
         "https://crunchbase.com/organization/" + companyName.toLowerCase()
+      ]
+    };
+  }
+
+  private generateComprehensiveAccountMap(companyName: string, companyDomain?: string): AccountMap {
+    const domain = companyDomain || `${companyName.toLowerCase().replace(/\s+/g, '')}.com`;
+    
+    return {
+      company_snapshot: {
+        industry: "Technology Services & Software",
+        hq: "San Francisco, CA (HQ) + Remote-first culture",
+        size: "450-550 employees (20% growth YoY)",
+        revenue: "$40M-$75M ARR (Series C funded)",
+        structure_summary: "Matrix organization with strong technical leadership, security-first culture, and distributed teams across US/EU"
+      },
+      org_tree: [
+        // C-Suite Leadership
+        {
+          name: "Sarah Chen",
+          title: "Chief Executive Officer",
+          reports_to: "Board of Directors",
+          level: "C-Suite",
+          region_function: "Global/Executive",
+          sources: [`https://${domain}/about`, "https://linkedin.com/in/sarahchen-ceo", "https://crunchbase.com/person/sarah-chen"]
+        },
+        {
+          name: "Michael Rodriguez",
+          title: "Chief Technology Officer",
+          reports_to: "Sarah Chen",
+          level: "C-Suite", 
+          region_function: "Global/Technology",
+          sources: [`https://${domain}/leadership`, "https://linkedin.com/in/mrodriguez-cto", "https://theorg.com/" + companyName.toLowerCase()]
+        },
+        {
+          name: "Dr. Emily Watson",
+          title: "Chief Information Security Officer",
+          reports_to: "Sarah Chen",
+          level: "C-Suite",
+          region_function: "Global/Security",
+          sources: [`https://${domain}/security-team`, "https://linkedin.com/in/emily-watson-ciso", "https://rsaconference.com/speakers/emily-watson"]
+        },
+        {
+          name: "David Park",
+          title: "Chief Financial Officer", 
+          reports_to: "Sarah Chen",
+          level: "C-Suite",
+          region_function: "Global/Finance",
+          sources: [`https://${domain}/investors`, "https://linkedin.com/in/davidpark-cfo", "https://sec.gov/edgar/searchedgar"]
+        },
+        
+        // VP Level Leadership
+        {
+          name: "Jennifer Liu",
+          title: "VP of Engineering",
+          reports_to: "Michael Rodriguez",
+          level: "VP",
+          region_function: "Global/Engineering",
+          sources: [`https://jobs.${domain}/vp-engineering`, "https://linkedin.com/in/jennifer-liu-vpe", "https://github.com/" + companyName.toLowerCase()]
+        },
+        {
+          name: "Marcus Thompson",
+          title: "VP of Security Engineering", 
+          reports_to: "Dr. Emily Watson",
+          level: "VP",
+          region_function: "Global/Security",
+          sources: [`https://blog.${domain}/security-team`, "https://linkedin.com/in/marcus-thompson-vpsec", "https://blackhat.com/speakers/marcus-thompson"]
+        },
+        {
+          name: "Anna Kowalski",
+          title: "VP of Product",
+          reports_to: "Sarah Chen",
+          level: "VP", 
+          region_function: "Global/Product",
+          sources: [`https://${domain}/product-team`, "https://linkedin.com/in/anna-kowalski-product", "https://productled.com/speakers/anna-kowalski"]
+        },
+        {
+          name: "Robert Kim",
+          title: "VP of Sales",
+          reports_to: "Sarah Chen",
+          level: "VP",
+          region_function: "North America/Sales", 
+          sources: [`https://${domain}/sales-team`, "https://linkedin.com/in/robert-kim-sales", "https://salesforce.com/events/speakers/robert-kim"]
+        },
+
+        // Director Level Leadership  
+        {
+          name: "Lisa Martinez",
+          title: "Director of Platform Engineering",
+          reports_to: "Jennifer Liu", 
+          level: "Director",
+          region_function: "Global/Platform",
+          sources: [`https://github.com/${companyName.toLowerCase()}/contributors`, "https://linkedin.com/in/lisa-martinez-platform", `https://jobs.${domain}/platform-team`]
+        },
+        {
+          name: "James Anderson",
+          title: "Director of Application Security",
+          reports_to: "Marcus Thompson",
+          level: "Director",
+          region_function: "Global/AppSec", 
+          sources: [`https://blog.${domain}/appsec-practices`, "https://linkedin.com/in/james-anderson-appsec", "https://owasp.org/speakers/james-anderson"]
+        },
+        {
+          name: "Priya Sharma", 
+          title: "Director of DevSecOps",
+          reports_to: "Marcus Thompson",
+          level: "Director",
+          region_function: "Global/DevSecOps",
+          sources: [`https://devops.${domain}/team`, "https://linkedin.com/in/priya-sharma-devsecops", "https://kubecon.io/speakers/priya-sharma"]
+        },
+        {
+          name: "Thomas Mueller",
+          title: "Director of Compliance & Risk",
+          reports_to: "Dr. Emily Watson", 
+          level: "Director",
+          region_function: "Global/Compliance",
+          sources: [`https://${domain}/compliance`, "https://linkedin.com/in/thomas-mueller-risk", "https://complianceweek.com/authors/thomas-mueller"]
+        },
+
+        // Technical Leadership
+        {
+          name: "Kevin Chang",
+          title: "Principal Security Architect",
+          reports_to: "James Anderson",
+          level: "Principal", 
+          region_function: "Global/Architecture",
+          sources: [`https://github.com/${companyName.toLowerCase()}/security`, "https://linkedin.com/in/kevin-chang-architect", `https://blog.${domain}/security-architecture`]
+        },
+        {
+          name: "Maria Gonzalez",
+          title: "Staff Site Reliability Engineer", 
+          reports_to: "Lisa Martinez",
+          level: "Staff",
+          region_function: "Global/SRE",
+          sources: [`https://github.com/${companyName.toLowerCase()}/sre`, "https://linkedin.com/in/maria-gonzalez-sre", "https://srecon.io/speakers/maria-gonzalez"]
+        },
+        {
+          name: "Alex Chen",
+          title: "Lead Security Engineer",
+          reports_to: "James Anderson",
+          level: "Senior", 
+          region_function: "US-West/Security",
+          sources: [`https://jobs.${domain}/security-engineer`, "https://linkedin.com/in/alex-chen-security", `https://blog.${domain}/team/alex-chen`]
+        },
+        {
+          name: "Rachel Johnson", 
+          title: "Senior Product Security Manager",
+          reports_to: "Anna Kowalski",
+          level: "Senior",
+          region_function: "Global/Product Security",
+          sources: [`https://${domain}/product-security`, "https://linkedin.com/in/rachel-johnson-prodsec", "https://bsidessf.org/speakers/rachel-johnson"]
+        }
+      ],
+      role_analysis: [
+        {
+          name: "Sarah Chen",
+          title: "Chief Executive Officer", 
+          role: "economic buyer",
+          notes: "Final approval authority for enterprise deals >$200K. Security-conscious CEO with technical background. Active on LinkedIn discussing cybersecurity trends.",
+          sources: [`https://${domain}/about`, "https://linkedin.com/in/sarahchen-ceo"]
+        },
+        {
+          name: "Dr. Emily Watson",
+          title: "Chief Information Security Officer",
+          role: "economic buyer", 
+          notes: "Primary budget owner for security tooling ($500K+ annual budget). PhD in Cybersecurity. Regular speaker at RSA Conference. Key decision maker for application security tools.",
+          sources: [`https://${domain}/security-team`, "https://rsaconference.com/speakers/emily-watson"]
+        },
+        {
+          name: "Michael Rodriguez",
+          title: "Chief Technology Officer",
+          role: "influencer",
+          notes: "Technology strategy owner, influences architecture decisions. Strong advocate for developer productivity and security integration.",
+          sources: [`https://${domain}/leadership`, "https://linkedin.com/in/mrodriguez-cto"]
+        },
+        {
+          name: "Marcus Thompson", 
+          title: "VP of Security Engineering",
+          role: "champion",
+          notes: "Direct budget authority $100K-$300K. Passionate about application security testing. Team of 25+ security engineers. Key implementer of security tools.",
+          sources: [`https://blog.${domain}/security-team`, "https://blackhat.com/speakers/marcus-thompson"]
+        },
+        {
+          name: "Jennifer Liu",
+          title: "VP of Engineering",
+          role: "evaluator",
+          notes: "Technical evaluation lead for developer tools. 150+ engineering team. Focus on CI/CD integration and developer experience.",
+          sources: [`https://jobs.${domain}/vp-engineering`, "https://github.com/" + companyName.toLowerCase()]
+        },
+        {
+          name: "James Anderson",
+          title: "Director of Application Security", 
+          role: "champion",
+          notes: "Day-to-day application security owner. Direct experience with SAST/DAST tools. Team of 12 AppSec engineers. Strong OWASP community involvement.",
+          sources: [`https://blog.${domain}/appsec-practices`, "https://owasp.org/speakers/james-anderson"]
+        },
+        {
+          name: "Priya Sharma",
+          title: "Director of DevSecOps",
+          role: "evaluator",
+          notes: "CI/CD security integration expert. Kubernetes security specialist. Key evaluator for pipeline security tools.",
+          sources: [`https://devops.${domain}/team`, "https://kubecon.io/speakers/priya-sharma"]
+        },
+        {
+          name: "Kevin Chang",
+          title: "Principal Security Architect", 
+          role: "influencer",
+          notes: "Security architecture decisions. Technical depth in application security. Mentors security team. Strong technical influencer.",
+          sources: [`https://github.com/${companyName.toLowerCase()}/security`, `https://blog.${domain}/security-architecture`]
+        },
+        {
+          name: "Alex Chen",
+          title: "Lead Security Engineer",
+          role: "user",
+          notes: "Hands-on security testing practitioner. Direct user of SAST/DAST tools. Provides feedback on tool effectiveness and usability.",
+          sources: [`https://jobs.${domain}/security-engineer`, "https://linkedin.com/in/alex-chen-security"]
+        },
+        {
+          name: "David Park",
+          title: "Chief Financial Officer", 
+          role: "blocker",
+          notes: "Budget oversight and ROI validation required. Cost-conscious approach to tool procurement. Requires clear business case and metrics.",
+          sources: [`https://${domain}/investors`, "https://linkedin.com/in/davidpark-cfo"]
+        }
+      ],
+      gaps: [
+        "European regional leadership structure unclear - requires additional research",
+        "IT/Infrastructure team leadership not publicly identified", 
+        "Customer Success team security contacts unknown",
+        "Board of Directors technology/security expertise composition needs verification",
+        "Procurement team contacts and processes not mapped"
+      ],
+      citations: [
+        `https://${domain}/about`,
+        `https://${domain}/leadership`, 
+        `https://${domain}/security-team`,
+        `https://linkedin.com/company/${companyName.toLowerCase()}`,
+        `https://theorg.com/${companyName.toLowerCase()}`,
+        `https://crunchbase.com/organization/${companyName.toLowerCase()}`,
+        `https://github.com/${companyName.toLowerCase()}`,
+        `https://jobs.${domain}/`,
+        "https://rsaconference.com/",
+        "https://blackhat.com/",
+        "https://owasp.org/",
+        "https://kubecon.io/",
+        `https://blog.${domain}/`,
+        "https://sec.gov/edgar/",
+        "https://glassdoor.com/Reviews/" + companyName.replace(/\s+/g, '-')
       ]
     };
   }
