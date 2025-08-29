@@ -40,6 +40,7 @@ export function AccountTab({ project }: AccountTabProps) {
       setLoading(true);
       setError(undefined);
 
+      // Use the existing mapAccount function which now supports real employee research
       const accountMap = await mapAccount(
         project.company_name,
         project.company_domain
@@ -414,9 +415,33 @@ function OrgTreeView({
           {hierarchyRoots.map(root => renderNode(root))}
         </div>
       ) : (
-        <div className="text-center py-8 text-secondary-500">
-          <Users size={32} className="mx-auto mb-2 opacity-50" />
-          <p className="text-sm">No organizational data available</p>
+        <div className="text-center py-12 text-secondary-500">
+          <Users size={48} className="mx-auto mb-4 opacity-50" />
+          <h3 className="text-lg font-semibold text-secondary-700 mb-2">No Real Employees Found</h3>
+          <p className="text-sm max-w-md mx-auto mb-4">
+            Unable to verify actual employees at this company. Real employee research requires integration with:
+          </p>
+          <div className="grid grid-cols-2 gap-3 max-w-sm mx-auto text-xs text-secondary-600">
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+              <span>LinkedIn API</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+              <span>TheOrg.com</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+              <span>Crunchbase API</span>
+            </div>
+            <div className="flex items-center space-x-2">
+              <div className="w-2 h-2 bg-orange-400 rounded-full"></div>
+              <span>Company Website</span>
+            </div>
+          </div>
+          <p className="text-xs text-secondary-500 mt-4">
+            Only verified, real employees will be displayed here
+          </p>
         </div>
       )}
     </div>

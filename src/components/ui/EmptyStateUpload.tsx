@@ -68,6 +68,7 @@ export function EmptyStateUpload() {
       
       // Extract company and person information
       let companyName = '';
+      let companyDomain = '';
       let personName = profile.full_name || 'Professional Contact';
       
       // Extract company name from current experience
@@ -92,12 +93,27 @@ export function EmptyStateUpload() {
         companyName = 'New Company'; // Fallback
       }
       
+      // Generate company domain from company name
+      companyDomain = companyName
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '') // Remove special characters
+        .replace(/\s+/g, '') // Remove spaces
+        .replace(/(inc|llc|corp|ltd|co|company)$/g, '') // Remove common suffixes
+        + '.com';
+      
+      // Try to extract actual domain from text (look for email domains or website mentions)
+      const fullText = [profile.headline, ...profile.notes, ...profile.experience.map(e => e.company)].join(' ');
+      const domainMatch = fullText.match(/(?:@|https?:\/\/(?:www\.)?)([\w-]+\.(?:com|org|net|io|co|ai))/i);
+      if (domainMatch) {
+        companyDomain = domainMatch[1].toLowerCase();
+      }
+      
       // Create new project automatically
       setUploadProgress({ status: 'Creating project...', progress: 97 });
-      console.log('Auto-creating new project for:', companyName, 'with contact:', personName);
+      console.log('Auto-creating new project for:', companyName, 'with contact:', personName, 'domain:', companyDomain);
       
       const projectName = `${companyName} - ${personName}`;
-      createProject(projectName, companyName);
+      createProject(projectName, companyName, companyDomain);
       
       // Wait for project creation and get the new project
       await new Promise(resolve => setTimeout(resolve, 200));
