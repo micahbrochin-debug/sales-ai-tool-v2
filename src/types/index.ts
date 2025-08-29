@@ -135,6 +135,9 @@ export interface AccountMap {
     size: string;
     revenue: string;
     structure_summary: string;
+    confidence_score?: number;
+    last_updated?: string;
+    total_sources?: number;
   };
   org_tree: OrgMember[];
   role_analysis: RoleAnalysis[];

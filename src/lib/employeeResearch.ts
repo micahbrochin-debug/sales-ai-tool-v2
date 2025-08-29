@@ -348,13 +348,13 @@ function inferLevel(title: string): string {
   return "Individual Contributor";
 }
 
-function inferStakeholderRole(title: string): "economic buyer" | "champion" | "evaluator" | "influencer" | "blocker" | "user" {
+function inferStakeholderRole(title: string): "economic buyer" | "champion" | "evaluator" | "influencer" | "blocker" | "Lead to validate" {
   if (/ceo|cfo|chief/i.test(title)) return "economic buyer";
   if (/cto|vp.*engineering|vp.*security/i.test(title)) return "champion";
   if (/director.*security|director.*engineering/i.test(title)) return "evaluator";
   if (/principal|architect|staff/i.test(title)) return "influencer";
   if (/legal|compliance|procurement/i.test(title)) return "blocker";
-  return "user";
+  return "Lead to validate";
 }
 
 function parseSearchResultsForEmployees(searchResults: any, companyName: string) {

@@ -809,13 +809,20 @@ ADVANCED LEADERSHIP MAPPING REQUIREMENTS:
 Output: Comprehensive Account Map JSON with 15+ verified organizational members, complete reporting hierarchy, budget authority mapping, and multi-source verification.`;
 
     if (this.useMockData) {
-      console.log('🔍 Researching actual employees at', companyName, 'from real sources...');
-      await new Promise(resolve => setTimeout(resolve, 8000));
+      console.log('🔍 Performing comprehensive executive discovery for', companyName);
+      console.log('🎯 Target: 15+ executives including C-Suite, VPs, Directors like user\'s custom GPT');
+      await new Promise(resolve => setTimeout(resolve, 6000));
       
-      // Import and use the dedicated employee research service
-      const { researchRealCompanyEmployees } = await import('./employeeResearch');
-      const realAccountMap = await researchRealCompanyEmployees(companyName, companyDomain);
-      return realAccountMap;
+      // Import and use the enhanced account mapping service
+      const { callClaudeAccountMapping } = await import('./accountMappingService');
+      const comprehensiveAccountMap = await callClaudeAccountMapping({
+        companyName,
+        companyDomain: companyDomain,
+        searchDepth: 'comprehensive',
+        targetExecutiveCount: 15,
+        priorityRoles: ['CEO', 'CTO', 'CISO', 'CFO', 'VP Engineering', 'VP Security', 'Director Security']
+      });
+      return comprehensiveAccountMap;
     }
 
     const response = await this.callAI(ACCOUNT_MAP_PROMPT, prompt);
@@ -1332,7 +1339,7 @@ Output: Sales Plan JSON only.`;
   private async crawlCompanyWebsite(companyName: string, domain: string) {
     console.log(`🕷️ Crawling ${domain} for employee information...`);
     
-    const employees = [];
+    const employees: any[] = [];
     const pagesToCrawl = [
       `https://${domain}/about`,
       `https://${domain}/team`,
@@ -1427,13 +1434,13 @@ Output: Sales Plan JSON only.`;
     return "Individual Contributor";
   }
 
-  private inferStakeholderRole(title: string): "economic buyer" | "champion" | "evaluator" | "influencer" | "blocker" | "user" {
+  private inferStakeholderRole(title: string): "economic buyer" | "champion" | "evaluator" | "influencer" | "blocker" | "Lead to validate" {
     if (/ceo|cfo|chief/i.test(title)) return "economic buyer";
     if (/cto|vp.*engineering|vp.*security/i.test(title)) return "champion";
     if (/director.*security|director.*engineering/i.test(title)) return "evaluator";
     if (/principal|architect|staff/i.test(title)) return "influencer";
     if (/legal|compliance|procurement/i.test(title)) return "blocker";
-    return "user";
+    return "Lead to validate";
   }
 
   // Enhanced Account Mapping Helper Methods
@@ -1694,7 +1701,7 @@ Output: Sales Plan JSON only.`;
       {
         name: names.leadSecurityEngineer,
         title: "Lead Security Engineer", 
-        role: "user" as const,
+        role: "evaluator" as const,
         notes: `Hands-on security testing practitioner at ${companyName}. Direct daily user of SAST/DAST tools. Provides critical feedback on tool effectiveness, usability, and integration challenges for ${companyName}'s development workflow.`,
         sources: [`https://jobs.${domain}/security-engineer`, `https://linkedin.com/in/lead-security-engineer-${companyName.toLowerCase()}`]
       },
@@ -1797,7 +1804,7 @@ Output: Sales Plan JSON only.`;
   }
 
   private generateRealisticName(role: string): string {
-    const firstNames = {
+    const firstNames: Record<string, string[]> = {
       "CEO": ["Sarah", "Michael", "Jennifer", "David", "Emily", "Robert", "Lisa", "James", "Maria", "Kevin"],
       "CTO": ["Alex", "Priya", "Thomas", "Rachel", "Daniel", "Anna", "Marcus", "Nicole", "Andrew", "Samantha"],
       "CISO": ["Dr. Emily", "Marcus", "Jennifer", "Thomas", "Priya", "David", "Sarah", "James", "Maria", "Kevin"],
