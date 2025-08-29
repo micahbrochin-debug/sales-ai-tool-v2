@@ -1,44 +1,65 @@
 # AI Sales Tool
 
-A comprehensive AI-powered sales intelligence tool for enterprise software sales. Built with Next.js, TypeScript, and Tailwind CSS.
+A comprehensive AI-powered sales intelligence tool with **enterprise-grade deep web research capabilities** for professional sales teams. Built with Next.js, TypeScript, and Tailwind CSS.
 
-## Features
+## 🚀 Key Features
 
-### 🔍 **Prospect Intelligence**
-- **PDF Upload & OCR**: Upload LinkedIn PDFs and extract structured prospect profiles
+### 🔍 **Enhanced Prospect Intelligence**
+- **Advanced PDF Processing**: Upload LinkedIn PDFs with enhanced name extraction (supports Irish/Celtic names like "Conal Curran")
+- **Multi-Pattern Recognition**: Sophisticated regex patterns for accurate name detection with fallback strategies
 - **Profile Analysis**: Parse experience, education, certifications, and contact information
-- **Smart Data Extraction**: AI-powered normalization of prospect data
+- **Smart Data Extraction**: AI-powered normalization with validation and error handling
 
-### 🏢 **Company Research**
-- **Market Intelligence**: Industry analysis, company size, and revenue estimates
-- **Security Posture**: Compliance frameworks, recent incidents, and security signals
-- **Hiring Signals**: Development and security role tracking
-- **MEDDPICC + BANT**: Comprehensive sales methodology analysis
+### 🏢 **Comprehensive Company Research**
+**DEEP WEB RESEARCH across 15+ sources:**
+- ✅ **Job Boards**: LinkedIn Jobs, Indeed, Glassdoor, AngelList, Stack Overflow Jobs, Dice, ClearanceJobs, ZipRecruiter, Monster
+- ✅ **Business Intelligence**: Crunchbase (funding, leadership), TheOrg.com (organizational charts), ZoomInfo, D&B Hoovers
+- ✅ **Company Intelligence**: Websites, careers pages, blogs, press releases, investor relations
+- ✅ **Security Sources**: Have I Been Pwned, CVE databases, security advisory sites
+- ✅ **News & Press**: TechCrunch, industry publications, security incident reporting
+- **Market Intelligence**: Industry analysis, growth metrics, compliance frameworks
+- **MEDDPICC + BANT**: Advanced sales methodology with specific budget/timeline intelligence
 
-### ⚙️ **Tech Stack Reconnaissance**
-- **Development Stack**: CI/CD, SCM, cloud platforms, and frameworks
-- **Security Tools**: SAST/DAST, vulnerability management, and monitoring
-- **Evidence-Based**: All findings backed by sources and citations
-- **Gap Analysis**: Identify unknown areas for follow-up research
+### ⚙️ **Advanced Tech Stack Reconnaissance**
+**COMPREHENSIVE SOURCE COVERAGE:**
+- ✅ **GitHub Intelligence**: Repository analysis, package.json, Dockerfiles, CI/CD configs
+- ✅ **Developer Platforms**: Docker Hub, npm, PyPI, Maven, NuGet package analysis  
+- ✅ **Cloud Marketplaces**: AWS, Azure, GCP usage indicators
+- ✅ **Engineering Content**: Company blogs, Medium, Dev.to technical articles
+- ✅ **Conference Circuit**: Technical speaker analysis, presentation topics
+- ✅ **Social Technical Discussions**: Twitter/X, Reddit, Stack Overflow patterns
+- **Technology Categories**: 15+ tools across development and security stacks
+- **Evidence Documentation**: Source URLs, exact quotes, confidence levels
 
-### 👥 **Account Mapping**
-- **Org Chart Visualization**: Leadership hierarchy with reporting structure
-- **Stakeholder Analysis**: Economic buyers, champions, evaluators, and blockers
-- **Decision Tree**: Visual org structure with role identification
-- **Influence Mapping**: Contact strategy and engagement planning
+### 👥 **Enhanced Account Mapping**
+**COMPREHENSIVE ORGANIZATIONAL INTELLIGENCE:**
+- ✅ **Multi-Source Verification**: LinkedIn, TheOrg.com, company websites, Crunchbase, SEC filings
+- ✅ **Leadership Mapping**: C-suite, VPs, Directors with complete background verification
+- ✅ **Decision Authority**: Budget approvers, technology decision makers, procurement influencers
+- **Stakeholder Classification**: Economic buyers, champions, evaluators, influencers, blockers, users
+- **Cross-Source Confirmation**: Every person verified across minimum 2 sources
+- **Reporting Hierarchies**: Complete org structure with manager-direct report chains
 
-### 🎯 **Sales Plan Generation**
-- **Value Proposition**: Problem-solution mapping with proof points
-- **Stakeholder Strategy**: Personalized talk tracks for each contact
-- **MEDDPICC Summary**: Complete sales methodology assessment
-- **Mutual Action Plan**: Timeline-driven next steps with owners
-- **Risk Assessment**: Identify and mitigate sales obstacles
+### 🎯 **AI-Generated Sales Plans**
+- **Executive Summary**: Comprehensive opportunity analysis with specific metrics
+- **Value Proposition Mapping**: Problem-solution alignment with PortSwigger-specific proof points
+- **Stakeholder Strategy**: Personalized talk tracks and next actions for each contact
+- **Advanced MEDDPICC**: Complete sales methodology with budget ranges and decision processes
+- **Mutual Action Plans**: Timeline-driven milestones with specific owners and due dates
+- **Risk Mitigation**: Identified obstacles with recommended resolution strategies
 
-### 💬 **AI Sales Copilot**
-- **Context-Aware Chat**: Query any research data or sales strategy
-- **Smart Suggestions**: Get recommendations based on your data
-- **Natural Language**: Ask questions in plain English
-- **Real-Time Help**: Instant answers about your sales opportunity
+### 💬 **Professional AI Sales Copilot**
+- **Context-Aware Intelligence**: Query comprehensive research data and sales strategy
+- **Evidence-Based Recommendations**: All suggestions backed by source citations
+- **Natural Language Processing**: Ask complex questions about prospects and companies
+- **Real-Time Insights**: Instant analysis of your sales opportunity with confidence scoring
+
+### 🎨 **Enterprise-Grade UI/UX**
+- **Professional Design**: Inter font family with enterprise color schemes
+- **Production-Ready Components**: Card-elevated designs with shadows and animations
+- **Loading States**: Professional progress indicators and backdrop blur effects
+- **Status Management**: Color-coded badges (success, warning, error, info) with proper transitions
+- **Responsive Design**: Mobile-first approach with proper breakpoints and accessibility
 
 ## Getting Started
 
